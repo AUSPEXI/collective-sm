@@ -112,7 +112,6 @@ interface PremiumGateProps {
 }
 
 const TIER_HIERARCHY = {
-  null: 0,
   supporter: 1,
   champion: 2,
   builder: 3,
@@ -120,7 +119,7 @@ const TIER_HIERARCHY = {
 };
 
 export function PremiumGate({ tier, requiredTier, children, fallback }: PremiumGateProps) {
-  const userLevel = tier ? TIER_HIERARCHY[tier] : TIER_HIERARCHY[null];
+  const userLevel = tier ? TIER_HIERARCHY[tier] : 0;
   const requiredLevel = TIER_HIERARCHY[requiredTier];
   
   const hasAccess = userLevel >= requiredLevel;
