@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collective - A Social Media Platform for Collective Action</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        :root {
+            --primary-500: #007AFF;
+            --primary-300: #409CFF;
+            --primary-700: #0059B8;
+            --neutral-950: #0A0A0A;
+            --neutral-900: #141414;
+            --neutral-700: #3A3A3A;
+            --neutral-400: #9E9E9E;
+            --neutral-100: #F5F5F5;
+            --success-500: #34C759;
+            --warning-500: #FF9500;
+            --error-500: #FF3B30;
+            
+            --space-xs: 8px;
+            --space-sm: 12px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+            --space-xxxl: 96px;
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--neutral-950);
+            color: var(--neutral-100);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0, 122, 255, 0.1) 0%, var(--neutral-950) 70%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin-bottom: var(--space-xxxl);
+        }
+        
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: var(--space-lg);
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--neutral-400);
+            margin-bottom: var(--space-xl);
+            line-height: 1.4;
+        }
+        
+        .hero-description {
+            font-size: 18px;
+            color: var(--neutral-300);
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+        }
+        
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: var(--space-xxl);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-lg) var(--space-xl);
+            background: var(--primary-500);
+            color: var(--neutral-100);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: var(--primary-300);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--neutral-700);
+            color: var(--neutral-100);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--neutral-600);
+        }
+        
+        /* Problem/Solution Section */
+        .section {
+            padding: var(--space-xxxl) 0;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--neutral-100);
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--neutral-400);
+            text-align: center;
+            margin-bottom: var(--space-xxl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xxl);
+        }
+        
+        .card {
+            background: var(--neutral-900);
+            border-radius: var(--radius-md);
+            padding: var(--space-xl);
+            border: 1px solid var(--neutral-700);
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+            color: var(--primary-500);
+        }
+        
+        .card-content {
+            color: var(--neutral-300);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .card-list {
+            list-style: none;
+            color: var(--neutral-300);
+        }
+        
+        .card-list li {
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .card-list li::before {
+            content: '✗';
+            color: var(--error-500);
+            font-weight: bold;
+        }
+        
+        .solution-list li::before {
+            content: '✓';
+            color: var(--success-500);
+            font-weight: bold;
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xxl);
+        }
+        
+        .feature-card {
+            background: var(--neutral-900);
+            border-radius: var(--radius-md);
+            padding: var(--space-xl);
+            border: 1px solid var(--neutral-700);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-lg);
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            color: var(--neutral-100);
+        }
+        
+        .feature-description {
+            color: var(--neutral-400);
+            line-height: 1.6;
+        }
+        
+        /* Demo Links */
+        .demo-section {
+            background: var(--neutral-900);
+            border-radius: var(--radius-md);
+            padding: var(--space-xl);
+            border: 1px solid var(--neutral-700);
+            margin-top: var(--space-xl);
+        }
+        
+        .demo-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+        
+        .demo-link {
+            display: block;
+            padding: var(--space-lg);
+            background: var(--neutral-700);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--neutral-100);
+            transition: all 0.2s ease;
+            border: 1px solid var(--neutral-700);
+        }
+        
+        .demo-link:hover {
+            background: var(--neutral-600);
+            border-color: var(--primary-500);
+            transform: translateY(-2px);
+        }
+        
+        .demo-link-title {
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--primary-500);
+        }
+        
+        .demo-link-description {
+            font-size: 14px;
+            color: var(--neutral-400);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .hero-description {
+                font-size: 16px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">Collective</h1>
+            <p class="hero-subtitle">A Social Media Platform Designed for Collective Action</p>
+            <p class="hero-description">
+                Where people come together instead of being algorithmically divided. 
+                Where collective momentum is visible and coordination is enabled. 
+                Where the architecture serves communities, not engagement metrics.
+            </p>
+            
+            <div class="cta-group">
+                <a href="collective.html" class="btn">
+                    <i data-lucide="rocket"></i>
+                    Enter the Digital Dome
+                </a>
+                <a href="#problem-solution" class="btn btn-secondary">
+                    <i data-lucide="book-open"></i>
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem/Solution Section -->
+    <section id="problem-solution" class="section">
+        <div class="container">
+            <h2 class="section-title">The Problem with Current Social Media</h2>
+            <p class="section-subtitle">
+                Modern social platforms are architecturally designed to prevent the very coordination 
+                needed to hold them accountable.
+            </p>
+            
+            <div class="grid">
+                <!-- Current Problems -->
+                <div class="card slide-up">
+                    <h3 class="card-title">Current Social Media Problems</h3>
+                    <div class="card-content">
+                        <p>Current platforms optimize for engagement, not collective action. This creates systemic issues that prevent genuine coordination:</p>
+                    </div>
+                    <ul class="card-list">
+                        <li>Algorithmic suppression and shadow banning</li>
+                        <li>Engagement-optimized content that triggers division</li>
+                        <li>Visibility silos that prevent coordination</li>
+                        <li>Amplification systems that create hierarchy</li>
+                        <li>Pay-to-play attention markets</li>
+                        <li>Echo chambers and tribal fragmentation</li>
+                        <li>Untransparent algorithmic decision-making</li>
+                    </ul>
+                </div>
+                
+                <!-- Collective Solution -->
+                <div class="card slide-up" style="animation-delay: 0.2s;">
+                    <h3 class="card-title">Collective's Solution</h3>
+                    <div class="card-content">
+                        <p>We've built a platform that prioritizes collective action over individual engagement:</p>
+                    </div>
+                    <ul class="card-list solution-list">
+                        <li>Transparent visibility into who's being seen and why</li>
+                        <li>Real-time collective momentum visualization</li>
+                        <li>Coordinated action tools and frameworks</li>
+                        <li>Community-focused initiative organizing</li>
+                        <li>Zero algorithmic suppression or shadow bans</li>
+                        <li>Bridge-building across differences</li>
+                        <li>Measurable collective impact tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section class="section" style="background: var(--neutral-900);">
+        <div class="container">
+            <h2 class="section-title">Core Features</h2>
+            <p class="section-subtitle">
+                Every feature is designed to enable collective action and community building
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <h3 class="feature-title">The Digital Dome</h3>
+                    <p class="feature-description">
+                        A real-time visualization of collective action where you can see others pressing 
+                        the buttons and feel momentum building together.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <h3 class="feature-title">Initiative-Based Organizing</h3>
+                    <p class="feature-description">
+                        Focus on collective goals and community action rather than individual content 
+                        and engagement metrics.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <h3 class="feature-title">Momentum Tracking</h3>
+                    <p class="feature-description">
+                        Real-time progress bars and participant counts that make collective impact 
+                        visible and motivating.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="map"></i>
+                    </div>
+                    <h3 class="feature-title">Coordination Tools</h3>
+                    <p class="feature-description">
+                        Local activity maps, ally-finding tools, and organizing frameworks that 
+                        enable real-world coordination.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="shield"></i>
+                    </div>
+                    <h3 class="feature-title">Complete Transparency</h3>
+                    <p class="feature-description">
+                        Zero shadow bans, full visibility into platform operations, and transparent 
+                        algorithms that serve communities.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3 class="feature-title">Community-First Design</h3>
+                    <p class="feature-description">
+                        Every feature prioritizes collective wellbeing over individual attention, 
+                        building bridges instead of echo chambers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="section">
+        <div class="container">
+            <div class="demo-section">
+                <h2 class="section-title" style="margin-bottom: var(--space-md);">Explore the Platform</h2>
+                <p style="text-align: center; color: var(--neutral-400); margin-bottom: var(--space-xl);">
+                    Experience what a social media platform designed for collective action looks like
+                </p>
+                
+                <div class="demo-links">
+                    <a href="collective.html" class="demo-link">
+                        <div class="demo-link-title">Main Dashboard</div>
+                        <div class="demo-link-description">
+                            Explore the digital dome, browse active initiatives, and see real-time coordination in action
+                        </div>
+                    </a>
+                    
+                    <a href="initiative-detail.html" class="demo-link">
+                        <div class="demo-link-title">Initiative Detail View</div>
+                        <div class="demo-link-description">
+                            See how collective momentum is tracked, participants are organized, and real-time activity is displayed
+                        </div>
+                    </a>
+                    
+                    <a href="organize.html" class="demo-link">
+                        <div class="demo-link-title">Start Organizing</div>
+                        <div class="demo-link-description">
+                            Experience the process of creating new collective action initiatives with transparency tools
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Callout Section -->
+    <section class="section" style="background: rgba(0, 122, 255, 0.05); border-top: 1px solid rgba(0, 122, 255, 0.2); border-bottom: 1px solid rgba(0, 122, 255, 0.2);">
+        <div class="container">
+            <div class="funding-section" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h2 class="section-title" style="color: var(--primary-500); margin-bottom: var(--space-lg);">Support Collective Action</h2>
+                <p style="font-size: 18px; color: var(--neutral-300); margin-bottom: var(--space-lg);">
+                    Collective is community-driven and needs your support to keep the platform free and accessible 
+                    for everyone working toward positive change.
+                </p>
+                <p style="color: var(--neutral-400); margin-bottom: var(--space-xl);">
+                    Your contribution helps cover hosting, development, and community support costs.
+                </p>
+                
+                <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+                    <a href="funding.html" class="btn" style="background: var(--warning-500);">
+                        <i data-lucide="heart"></i>
+                        Support the Platform
+                    </a>
+                    <a href="COSTS.md" class="btn btn-secondary" target="_blank">
+                        <i data-lucide="file-text"></i>
+                        See Cost Breakdown
+                    </a>
+                </div>
+                
+                <p style="font-size: 14px; color: var(--neutral-500); margin-top: var(--space-lg);">
+                    Starting from $5/month • Transparent funding • No ads or tracking
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--neutral-900); padding: var(--space-xxl) 0; text-align: center; border-top: 1px solid var(--neutral-700);">
+        <div class="container">
+            <p style="color: var(--neutral-400); margin-bottom: var(--space-md);">
+                "The buttons exist, but the wires have been cut. We're rewiring them."
+            </p>
+            
+            <!-- Sponsor Wall -->
+            <div style="margin: var(--space-xl) 0; padding: var(--space-lg); background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md);">
+                <h3 style="color: var(--primary-500); margin-bottom: var(--space-md); font-size: 18px;">Current Sponsors</h3>
+                <p style="color: var(--neutral-500); font-size: 14px; margin-bottom: var(--space-md);">
+                    Help us reach our first sponsors! Every contribution makes Collective more sustainable.
+                </p>
+                <div style="display: flex; gap: var(--space-sm); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-md);">
+                    <span style="background: rgba(255, 255, 255, 0.1); padding: var(--space-xs) var(--space-sm); border-radius: var(--radius-sm); font-size: 12px; color: var(--neutral-400);">
+                        Community Supporters: 0
+                    </span>
+                    <span style="background: rgba(255, 255, 255, 0.1); padding: var(--space-xs) var(--space-sm); border-radius: var(--radius-sm); font-size: 12px; color: var(--neutral-400);">
+                        Community Champions: 0
+                    </span>
+                    <span style="background: rgba(255, 255, 255, 0.1); padding: var(--space-xs) var(--space-sm); border-radius: var(--radius-sm); font-size: 12px; color: var(--neutral-400);">
+                        Community Builders: 0
+                    </span>
+                </div>
+                <a href="funding.html" style="color: var(--warning-500); text-decoration: none; font-weight: 600;">
+                    Become our first sponsor →
+                </a>
+            </div>
+            
+            <div style="display: flex; gap: var(--space-lg); justify-content: center; margin: var(--space-lg) 0; flex-wrap: wrap;">
+                <a href="funding.html" style="color: var(--neutral-400); text-decoration: none; font-size: 14px;">
+                    <i data-lucide="heart" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"></i>
+                    Support Collective
+                </a>
+                <a href="FUNDING.md" style="color: var(--neutral-400); text-decoration: none; font-size: 14px;" target="_blank">
+                    <i data-lucide="file-text" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"></i>
+                    Funding Details
+                </a>
+                <a href="COSTS.md" style="color: var(--neutral-400); text-decoration: none; font-size: 14px;" target="_blank">
+                    <i data-lucide="dollar-sign" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"></i>
+                    Cost Transparency
+                </a>
+            </div>
+            
+            <p style="color: var(--neutral-500); font-size: 14px;">
+                Built by MiniMax Agent | Inspired by research on algorithmic control and collective action
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all animated elements
+        document.querySelectorAll('.slide-up').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
